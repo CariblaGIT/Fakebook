@@ -1,4 +1,5 @@
 import User from "./User.js";
+import { handleError } from "./handleErrors.js";
 
 export const getUsers = async (req, res) => {
     try {
@@ -8,10 +9,7 @@ export const getUsers = async (req, res) => {
             const user = await User.findOne({email: email}, '-password');
 
             if(!user){
-                return res.status(404).json({
-                    success: false,
-                    message: "You cant find a user with that email"
-                })
+                throw new Error("You cant find a user with that email")
             }
 
             return res.status(200).json({
@@ -24,10 +22,7 @@ export const getUsers = async (req, res) => {
         const users = await User.find({}, '-password');
 
         if(!users){
-            return res.status(404).json({
-                success: false,
-                message: "You cant find users"
-            })
+            throw new Error("You cant find users")
         }
 
         return res.status(200).json({
@@ -36,11 +31,7 @@ export const getUsers = async (req, res) => {
             data: users
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Users cant be retrieved",
-            error: error
-        })
+        handleError(res, error.message)
     }
 }
 
@@ -56,11 +47,7 @@ export const getProfile = async (req, res) => {
             data: user
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "User profile cant be retrieved",
-            error: error.message
-        })
+        handleError(res, error.message)
     }
 }
 
@@ -70,29 +57,20 @@ export const modifyProfile = async (req, res) => {
         const userId = req.tokenData.userId;
 
         if(!name && !email && !password){
-            return res.status(400).json({
-                success: false,
-                message: "Need to bring data to update a user"
-            })
+            throw new Error("Need to bring data to update a user")
         }
 
         if(email){
             const validEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!validEmail.test(email)) {
-                return res.status(400).json({
-                    success: false,
-                    message: "Email format invalid"
-                })
+                throw new Error("Email format invalid")
             }
         }
 
         if(password){
             const validPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/;
             if (password.length < 10 || !validPass.test(password) || password.includes(' ')){
-                return res.status(400).json({
-                    success: false,
-                    message: "Format password invalid"
-                })
+                throw new Error("Format password invalid")
             } else {
                 password = bcrypt.hashSync(password, 5);
             }
@@ -114,11 +92,7 @@ export const modifyProfile = async (req, res) => {
             message: "User profile updated succesfully"
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "User profile cant be updated",
-            error: error.message
-        })
+        handleError(res, error.message)
     }
 }
 
@@ -133,11 +107,7 @@ export const deleteUserById = async (req, res) => {
             message: "User deleted succesfully"
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "User cant be deleted",
-            error: error
-        })
+        handleError(res, error.message)
     }
 }
 
@@ -147,10 +117,7 @@ export const changeUserRole = async (req, res) => {
         const role = req.body.role
 
         if(!role){
-            return res.status(400).json({
-                success: false,
-                message: "Need a role to update a user role"
-            })
+            throw new Error("Need a role to update a user role")
         }
 
         await User.findByIdAndUpdate(
@@ -165,10 +132,6 @@ export const changeUserRole = async (req, res) => {
             message: "Changed role succesfully"
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Role from user cant be changed",
-            error: error
-        })
+        handleError(res, error.message)
     }
 }
