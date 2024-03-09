@@ -14,6 +14,10 @@ const PostSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User'
         }],
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
         comments: [{
             user: {
                 type: Schema.Types.ObjectId,

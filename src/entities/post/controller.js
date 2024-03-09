@@ -3,6 +3,7 @@ import Post from "./Post.js";
 export const makingPost = async (req, res) => {
     try {
         const {content, text} = req.body;
+        const owner = req.tokenData.userId;
 
         if(!text){
             return res.status(400).json({
@@ -13,7 +14,8 @@ export const makingPost = async (req, res) => {
 
         await Post.create({
             content,
-            text
+            text,
+            owner
         })
 
         return res.status(201).json({
@@ -24,6 +26,33 @@ export const makingPost = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Post cant be uploaded",
+            error: error
+        })
+    }
+}
+
+export const myPosts = async (req, res) => {
+    try {
+        const userId = req.tokenData.userId;
+
+        const posts = await Post.find({owner: userId});
+
+        if(posts.length === 0){
+            return res.status(404).json({
+                success: true,
+                message: "No posts from that user have been found"
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Posts retrieved succesfully",
+            data: posts
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Posts cant be retrieved",
             error: error
         })
     }
