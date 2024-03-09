@@ -82,3 +82,30 @@ export const myPosts = async (req, res) => {
         })
     }
 }
+
+export const postById = async (req, res) => {
+    try {
+        const postId = req.params.id;
+
+        const post = await Post.findById(postId);
+
+        if(!post){
+            return res.status(404).json({
+                success: true,
+                message: "No post has been found"
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Post retrieved succesfully",
+            data: post
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Post cant be retrieved",
+            error: error
+        })
+    }
+}
