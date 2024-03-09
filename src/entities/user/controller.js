@@ -121,3 +121,22 @@ export const modifyProfile = async (req, res) => {
         })
     }
 }
+
+export const deleteUserById = async (req, res) => {
+    try {
+        const userId = req.params.id
+
+        await User.deleteOne({ _id: userId })
+
+        return res.status(200).json({
+            success: true,
+            message: "User deleted succesfully"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "User cant be deleted",
+            error: error
+        })
+    }
+}
