@@ -26,8 +26,21 @@ export const getUsers = async (req, res) => {
 }
 
 export const getProfile = async (req, res) => {
-    return res.status(200).json({
-        success: true,
-        message: "User profile retrieved succesfully"
-    })
+    try {
+        const userId = req.tokenData.userId;
+
+        const user = await User.findById(userId, 'name email -_id');
+
+        return res.status(200).json({
+            success: true,
+            message: "User profile retrieved succesfully",
+            data: user
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "User profile cant be retrieved",
+            error: error.message
+        })
+    }
 }
