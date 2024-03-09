@@ -109,3 +109,59 @@ export const postById = async (req, res) => {
         })
     }
 }
+
+export const updatePost = async (req, res) => {
+    try {
+        const {postId, content, text} = req.body;
+        const userId = req.tokenData.userId;
+
+        if(!postId){
+            return res.status(400).json({
+                success: true,
+                message: "No introduced post reference"
+            })
+        }
+
+        if(!content && !text){
+            return res.status(400).json({
+                success: true,
+                message: "No introduced data to update the post"
+            })
+        }
+
+        const postToUpdate = await Post.findById(postId);
+
+        if(!postToUpdate){
+            return res.status(404).json({
+                success: true,
+                message: "No post has been found"
+            })
+        }
+
+        if((postToUpdate.owner).toString() !== userId){
+            return res.status(401).json({
+                success: false,
+                message: 'Unauthorized to change that post' 
+            })
+        }
+
+        await Post.findByIdAndUpdate(
+            postId,
+            {
+                content: content ? content : postToUpdate.content,
+                text: text ? text : postToUpdate.text,
+            }
+        )
+
+        return res.status(200).json({
+            success: true,
+            message: "Post updated succesfully"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Post cant be updated",
+            error: error
+        })
+    }
+}
