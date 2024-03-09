@@ -164,3 +164,35 @@ export const deletePost = async (req, res) => {
         handleError(res, error.message)
     }
 }
+
+export const giveOrRemoveLikePost = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.tokenData.userId;
+        let isLiked = false;
+
+        const postInteracted = await Post.findById(postId);
+
+        (postInteracted.likes).forEach(user => {
+            if(user.toString() === userId){
+                isLiked = true;
+            }
+        });
+
+        if(isLiked){
+            const userPosition = postInteracted.likes.indexOf(userId);
+            postInteracted.likes.splice(userPosition, 1);
+            await postInteracted.save();
+        } else {
+            postInteracted.likes.push(userId);
+            await postInteracted.save();
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Giving or removing like to post done succesfully"
+        })
+    } catch (error) {
+        handleError(res, error.message)
+    }
+}
