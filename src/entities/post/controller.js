@@ -63,6 +63,26 @@ export const myPosts = async (req, res) => {
     }
 }
 
+export const postsFromUser = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const posts = await Post.find({owner: userId});
+
+        if(posts.length === 0){
+            throw new Error ("No posts from that user have been found");
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Posts retrieved succesfully",
+            data: posts
+        })
+    } catch (error) {
+        handleError(res, error.message)
+    }
+}
+
 export const postById = async (req, res) => {
     try {
         const postId = req.params.id;
