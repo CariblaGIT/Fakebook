@@ -165,3 +165,32 @@ export const updatePost = async (req, res) => {
         })
     }
 }
+
+export const deletePost = async (req, res) => {
+    try {
+        const userId = req.tokenData.userId;
+        const postId = req.params.id;
+
+        const postToDelete = await Post.findById(postId);
+
+        if((postToDelete.owner).toString() !== userId){
+            return res.status(401).json({
+                success: false,
+                message: 'Unauthorized to delete that post' 
+            })
+        }
+
+        await Post.findByIdAndDelete(postId);
+
+        return res.status(200).json({
+            success: true,
+            message: "Post deleted succesfully"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Post cant be deleted",
+            error: error
+        })
+    }
+}
