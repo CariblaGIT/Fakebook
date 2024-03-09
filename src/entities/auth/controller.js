@@ -1,36 +1,24 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../user/User.js";
+import { handleError } from "./handleErrors.js";
 
 export const registerUser = async (req, res) => {
     try {
         const {name, email, password} = req.body;
 
         if(!email || !password || !name){
-            return res.status(400).json({
-                success: false,
-                message: "Needed to have an email and a password"
-            })
+            throw new Error("Needed to have an email, a password and a name");
         }
 
         const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
         if (!validEmail.test(email)) {
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "Format email invalid"
-                }
-            )
+            throw new Error("Format email invalid");
         }
 
         const validPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/;
         if (password.length < 10 || !validPass.test(password) || password.includes(' ')){
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "Format password invalid"
-                }
-            )
+            throw new Error("Format password invalid");
         }
 
         const passwordEncrypted = bcrypt.hashSync(password, 5);
@@ -46,11 +34,7 @@ export const registerUser = async (req, res) => {
             message: "User registered succesfully"
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "User cant be registered",
-            error: error
-        })
+        handleError(res, error.message);
     }
 };
 
@@ -59,20 +43,12 @@ export const loginUser = async (req, res) => {
         const {email, password} = req.body;
 
         if(!email || !password){
-            return res.status(400).json({
-                success: false,
-                message: "Needed to have an email and a password"
-            })
+            throw new Error("Needed to have an email and a password");
         }
 
         const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
         if (!validEmail.test(email)) {
-            return res.status(400).json(
-                {
-                    success: false,
-                    message: "Format email invalid"
-                }
-            )
+            throw new Error("Format email invalid");
         }
 
         const user = await User.findOne(
@@ -82,18 +58,12 @@ export const loginUser = async (req, res) => {
         );
 
         if(!user){
-            return res.status(400).json({
-                success: false,
-                message: "Email or password invalid"
-            })
+            throw new Error("No user exists, try again");
         }
 
         const isPassValid = bcrypt.compareSync(password, user.password);
         if(!isPassValid){
-            return res.status(400).json({
-                success: false,
-                message: "Email or password invalid"
-            })
+            throw new Error("Email or password invalids");
         } 
 
         const token = jwt.sign(
@@ -110,10 +80,6 @@ export const loginUser = async (req, res) => {
             token: token
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Login user failure",
-            error: error.message
-        });
+        handleError(res, error.message);
     }
 };
