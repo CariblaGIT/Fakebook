@@ -140,3 +140,35 @@ export const deleteUserById = async (req, res) => {
         })
     }
 }
+
+export const changeUserRole = async (req, res) => {
+    try {
+        const userId = req.params.id
+        const role = req.body.role
+
+        if(!role){
+            return res.status(400).json({
+                success: false,
+                message: "Need a role to update a user role"
+            })
+        }
+
+        await User.findByIdAndUpdate(
+            userId,
+            {
+                role: role
+            }
+        )
+
+        return res.status(200).json({
+            success: true,
+            message: "Changed role succesfully"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Role from user cant be changed",
+            error: error
+        })
+    }
+}
