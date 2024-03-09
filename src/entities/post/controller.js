@@ -31,6 +31,31 @@ export const makingPost = async (req, res) => {
     }
 }
 
+export const allPosts = async (req, res) => {
+    try {
+        const posts = await Post.find({});
+
+        if(posts.length === 0){
+            return res.status(404).json({
+                success: true,
+                message: "No posts have been found"
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Posts retrieved succesfully",
+            data: posts
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Posts cant be retrieved",
+            error: error
+        })
+    }
+}
+
 export const myPosts = async (req, res) => {
     try {
         const userId = req.tokenData.userId;
