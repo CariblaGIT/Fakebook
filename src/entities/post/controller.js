@@ -1,4 +1,5 @@
 import Post from "./Post.js";
+import { handleError } from "./handleErrors.js";
 
 export const makingPost = async (req, res) => {
     try {
@@ -6,10 +7,7 @@ export const makingPost = async (req, res) => {
         const owner = req.tokenData.userId;
 
         if(!text){
-            return res.status(400).json({
-                success: false,
-                message: "Needed to have a text to create a post"
-            })
+            throw new Error ("Needed to have a text to create a post");
         }
 
         await Post.create({
@@ -23,11 +21,7 @@ export const makingPost = async (req, res) => {
             message: "Post uploaded succesfully"
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Post cant be uploaded",
-            error: error
-        })
+        handleError(res, error.message)
     }
 }
 
@@ -36,10 +30,7 @@ export const allPosts = async (req, res) => {
         const posts = await Post.find({});
 
         if(posts.length === 0){
-            return res.status(404).json({
-                success: true,
-                message: "No posts have been found"
-            })
+            throw new Error ("No posts have been found");
         }
 
         return res.status(200).json({
@@ -48,11 +39,7 @@ export const allPosts = async (req, res) => {
             data: posts
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Posts cant be retrieved",
-            error: error
-        })
+        handleError(res, error.message)
     }
 }
 
@@ -63,10 +50,7 @@ export const myPosts = async (req, res) => {
         const posts = await Post.find({owner: userId});
 
         if(posts.length === 0){
-            return res.status(404).json({
-                success: true,
-                message: "No posts from that user have been found"
-            })
+            throw new Error ("No posts from that user have been found");
         }
 
         return res.status(200).json({
@@ -75,11 +59,7 @@ export const myPosts = async (req, res) => {
             data: posts
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Posts cant be retrieved",
-            error: error
-        })
+        handleError(res, error.message)
     }
 }
 
@@ -90,10 +70,7 @@ export const postById = async (req, res) => {
         const post = await Post.findById(postId);
 
         if(!post){
-            return res.status(404).json({
-                success: true,
-                message: "No post has been found"
-            })
+            throw new Error ("No post has been found");
         }
 
         return res.status(200).json({
@@ -102,11 +79,7 @@ export const postById = async (req, res) => {
             data: post
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Post cant be retrieved",
-            error: error
-        })
+        handleError(res, error.message);
     }
 }
 
@@ -116,33 +89,21 @@ export const updatePost = async (req, res) => {
         const userId = req.tokenData.userId;
 
         if(!postId){
-            return res.status(400).json({
-                success: true,
-                message: "No introduced post reference"
-            })
+            throw new Error ("No introduced post reference");
         }
 
         if(!content && !text){
-            return res.status(400).json({
-                success: true,
-                message: "No introduced data to update the post"
-            })
+            throw new Error ("No introduced data to update the post");
         }
 
         const postToUpdate = await Post.findById(postId);
 
         if(!postToUpdate){
-            return res.status(404).json({
-                success: true,
-                message: "No post has been found"
-            })
+            throw new Error ("No post has been found");
         }
 
         if((postToUpdate.owner).toString() !== userId){
-            return res.status(401).json({
-                success: false,
-                message: 'Unauthorized to change that post' 
-            })
+            throw new Error ("Unauthorized to change that post")
         }
 
         await Post.findByIdAndUpdate(
@@ -158,11 +119,7 @@ export const updatePost = async (req, res) => {
             message: "Post updated succesfully"
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Post cant be updated",
-            error: error
-        })
+        handleError(res, error.message);
     }
 }
 
@@ -174,10 +131,7 @@ export const deletePost = async (req, res) => {
         const postToDelete = await Post.findById(postId);
 
         if((postToDelete.owner).toString() !== userId){
-            return res.status(401).json({
-                success: false,
-                message: 'Unauthorized to delete that post' 
-            })
+            throw new Error ("Unauthorized to delete that post")
         }
 
         await Post.findByIdAndDelete(postId);
@@ -187,10 +141,6 @@ export const deletePost = async (req, res) => {
             message: "Post deleted succesfully"
         })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Post cant be deleted",
-            error: error
-        })
+        handleError(res, error.message)
     }
 }
