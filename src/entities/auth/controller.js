@@ -11,7 +11,7 @@ export const registerUser = async (req, res) => {
             throw new Error("Needed to have an email, a password and a name");
         }
 
-        const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+        const validEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!validEmail.test(email)) {
             throw new Error("Format email invalid");
         }
