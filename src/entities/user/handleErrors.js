@@ -9,6 +9,7 @@ export const handleError = (res, errorMessage) => {
             break;
         case "You cant find a user with that email":
         case "You cant find users":
+        case "No posts from that user have been found":
             statusCode = 404
             break;
     }
