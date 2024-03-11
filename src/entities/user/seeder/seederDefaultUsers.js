@@ -10,7 +10,7 @@ export const seederDefaultUsers = async () => {
 		await User.create([
 			{
                 name: "superAdmin",
-				email: "auperadmin@superadmin.com",
+				email: "superadmin@superadmin.com",
                 password: bcrypt.hashSync('superAdmin123#', 5),
                 role: "super_admin",
 				_id: new mongoose.Types.ObjectId("65ed7d2f6fa9305f1c42440d")
