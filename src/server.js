@@ -2,16 +2,10 @@
 // const express = require("express");
 
 import 'dotenv/config';
-import express from 'express';
-import router from './router.js'
+import app from './app.js'
 import { dbConnection } from './db.js';
 
-const app = express();
 const PORT = process.env.PORT || 4001;
-
-app.use(express.json());
-
-app.use('/api', router);
 
 dbConnection()
     .then(() => {
