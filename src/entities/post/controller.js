@@ -70,10 +70,6 @@ export const postById = async (req, res) => {
 
         const post = await Post.findById(postId);
 
-        if(!post){
-            throw new Error ("No post has been found");
-        }
-
         return res.status(200).json({
             success: true,
             message: "Post retrieved succesfully",
@@ -99,15 +95,11 @@ export const updatePost = async (req, res) => {
 
         const postToUpdate = await Post.findById(postId);
 
-        if(!postToUpdate){
-            throw new Error ("No post has been found");
-        }
-
         if((postToUpdate.owner).toString() !== userId){
             throw new Error ("Unauthorized to change that post")
         }
 
-        await Post.findByIdAndUpdate(
+        const updatedPost = await Post.findByIdAndUpdate(
             postId,
             {
                 content: content ? content : postToUpdate.content,
@@ -117,7 +109,8 @@ export const updatePost = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "Post updated succesfully"
+            message: "Post updated succesfully",
+            data: updatedPost
         })
     } catch (error) {
         handleError(res, error.message);
@@ -171,7 +164,8 @@ export const giveOrRemoveLikePost = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "Giving or removing like to post done succesfully"
+            message: "Giving or removing like to post done succesfully",
+            data: postInteracted
         })
     } catch (error) {
         handleError(res, error.message)

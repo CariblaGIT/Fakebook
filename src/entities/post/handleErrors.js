@@ -11,8 +11,6 @@ export const handleError = (res, errorMessage) => {
         case "Unauthorized to change that post":
             statusCode = 401
             break;
-        case "No post has been found":
-        case "No posts have been found":
         case "No posts from that user have been found":
             statusCode = 404
             break;

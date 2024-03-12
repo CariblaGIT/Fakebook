@@ -380,6 +380,147 @@ describe ("Posts API endpoints" , () => {
         expect(body.message).toBe("Posts retrieved succesfully")
         expect(body.data.length = 1)
     })
+
+    test("Getting post by id bad => Not existed post", async () => {
+        const {status, body} = await request(server)
+            .get('/api/posts/1')
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(500)
+    })
+
+    test("Getting post by id correctly", async () => {
+        const {status, body} = await request(server)
+            .get(`/api/posts/${postCreatedInTestsId}`)
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Post retrieved succesfully")
+        expect(body.data.text = "Today has been a great day for uploading a comment on Fakebook")
+    })
+
+    test("Updating post text bad => No giving postId", async () => {
+        const {status, body} = await request(server)
+            .put('/api/posts/')
+            .send({
+                content: "https://www.twiiter.com/logo.png"
+            })
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(400)
+        expect(body.message).toBe("No introduced post reference")
+    })
+
+    test("Updating post text bad => No giving content to update", async () => {
+        const {status, body} = await request(server)
+            .put('/api/posts/')
+            .send({
+                postId: postCreatedInTestsId
+            })
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(400)
+        expect(body.message).toBe("No introduced data to update the post")
+    })
+
+    test("Updating post text bad => Not users post", async () => {
+        const {status, body} = await request(server)
+            .put('/api/posts/')
+            .send({
+                postId: postCreatedInTestsId,
+                content: "https://www.twiiter.com/logo.png"
+            })
+            .set('Authorization', `Bearer ${notSuperAdminToken}`)
+
+        expect(status).toBe(401)
+        expect(body.message).toBe("Unauthorized to change that post")
+    })
+
+    test("Updating post text bad => Not existing postId", async () => {
+        const {status, body} = await request(server)
+            .put('/api/posts/')
+            .send({
+                postId: 1,
+                content: "https://www.twiiter.com/logo.png"
+            })
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(500)
+    })
+
+    test("Updating post text correctly", async () => {
+        const {status, body} = await request(server)
+            .put('/api/posts/')
+            .send({
+                postId: postCreatedInTestsId,
+                content: "https://www.twiiter.com/logo.png"
+            })
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Post updated succesfully")
+        expect(body.data.content = "https://www.twiiter.com/logo.png")
+    })
+
+    test("Updating post text correctly", async () => {
+        const {status, body} = await request(server)
+            .put('/api/posts/')
+            .send({
+                postId: postCreatedInTestsId,
+                text: "It was a wonderful day to post here on Fakebook, but now no :("
+            })
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Post updated succesfully")
+        expect(body.data.text = "It was a wonderful day to post here on Fakebook, but now no :(")
+    })
+
+    test("Giving like to post correctly", async () => {
+        const {status, body} = await request(server)
+            .put(`/api/posts/like/${postCreatedInTestsId}`)
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Giving or removing like to post done succesfully")
+        expect(body.data.likes.length = 1)
+    })
+
+    test("Removing like to post correctly", async () => {
+        const {status, body} = await request(server)
+            .put(`/api/posts/like/${postCreatedInTestsId}`)
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Giving or removing like to post done succesfully")
+        expect(body.data.likes.length = 0)
+    })
+
+    test("Deleting post bad => Not user post", async () => {
+        const {status, body} = await request(server)
+            .delete(`/api/posts/${postCreatedInTestsId}`)
+            .set('Authorization', `Bearer ${notSuperAdminToken}`)
+
+        expect(status).toBe(401)
+        expect(body.message).toBe("Unauthorized to delete that post")
+    })
+
+    test("Deleting post bad => Not post", async () => {
+        const {status, body} = await request(server)
+            .delete('/api/posts/1')
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(500)
+    })
+
+    test("Deleting post correctly", async () => {
+        const {status, body} = await request(server)
+            .delete(`/api/posts/${postCreatedInTestsId}`)
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Post deleted succesfully")
+    })
 })
 
 afterAll(async () => {
