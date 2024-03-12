@@ -30,28 +30,28 @@ This API is a project focused on the correct implementation of the methods, stru
 
 ## ⌨️ Stack
 <div align="center">
-<a href="https://developer.mozilla.org/es/docs/Web/JavaScript">
+<a href="https://developer.mozilla.org/es/docs/Web/JavaScript" style="text-decoration:none">
     <img src= "https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/>
 </a>
-<a href="https://www.postman.com/">
+<a href="https://www.postman.com/" style="text-decoration:none">
     <img src= "https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white"/>
 </a>
-<a href="https://www.npmjs.com/">
+<a href="https://www.npmjs.com/" style="text-decoration:none">
     <img src= "https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
 </a>
-<a href="https://jwt.io/">
+<a href="https://jwt.io/" style="text-decoration:none">
     <img src= "https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white"/>
 </a>
-<a href="https://www.docker.com/">
+<a href="https://www.docker.com/" style="text-decoration:none">
     <img src= "https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white"/>
 </a>
-<a href="https://www.mongodb.com/es">
+<a href="https://www.mongodb.com/es" style="text-decoration:none">
     <img src= "https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white"/>
 </a>
-<a href="https://expressjs.com/en/">
+<a href="https://expressjs.com/en/" style="text-decoration:none">
     <img src= "https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white"/>
 </a>
-<a href="https://nodejs.org/en">
+<a href="https://nodejs.org/en" style="text-decoration:none">
     <img src= "https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
 </a>
 </div>
