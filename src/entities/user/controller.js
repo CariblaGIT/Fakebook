@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import User from "./User.js";
 import Post from "../post/Post.js";
 import { handleError } from "./handleErrors.js";
@@ -99,7 +100,7 @@ export const modifyProfile = async (req, res) => {
 
         const userToUpdate = User.findById(userId);
 
-        await User.findByIdAndUpdate(
+        const userUpdated = await User.findByIdAndUpdate(
             userId,
             {
                 name: name ? name : userToUpdate.name,
@@ -110,7 +111,8 @@ export const modifyProfile = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "User profile updated succesfully"
+            message: "User profile updated succesfully",
+            data: userUpdated
         })
     } catch (error) {
         handleError(res, error.message)
