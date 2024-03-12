@@ -9,7 +9,7 @@ export const getUsers = async (req, res) => {
         if(email){
             const user = await User.findOne({email: email}, '-password');
 
-            if(!user){
+            if(user == null){
                 throw new Error("You cant find a user with that email")
             }
 

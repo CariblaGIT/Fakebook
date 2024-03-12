@@ -1,15 +1,17 @@
 import 'dotenv/config';
 import request from "supertest";
-import { dbTestConnection } from "../db.js";
+import { dbConnection } from "../db.js";
 import app from "../app.js";
 import mongoose from "mongoose";
 
 let server;
-let token;
-const user1Id = "65ed7d2f6fa9305f1c42440e"
+let superAdminToken;
+let notSuperAdminToken;
+const userFromSeederId = "65ed7d2f6fa9305f1c424410";
+const adminFromSeederId = "65ed7d2f6fa9305f1c42440e";
 
 beforeAll(async () => {
-    await dbTestConnection();
+    await dbConnection();
     server = app.listen(4000);
 })
 
@@ -64,8 +66,7 @@ describe("Auth API endpoints" , () => {
             .send({
                 name: "userTest",
                 email: "usertest@usertest.com",
-				password: 'UserTest12345#',
-                _id: new mongoose.Types.ObjectId("65ed7d2f6fa9305f1c42440e")
+				password: 'UserTest12345#'
             })
         expect(status).toBe(201);
         expect(body.message).toBe("User registered succesfully");
@@ -121,10 +122,89 @@ describe("Auth API endpoints" , () => {
                 email: "usertest@usertest.com",
 				password: 'UserTest12345#'
             })
-
-        token = body.token;
+        notSuperAdminToken = body.token;
         expect(status).toBe(200);
         expect(body.message).toBe("User logged successfully");
+    })
+
+    test("Login superAdmin correctly", async () => {
+        const {status, body} = await request(server)
+            .post('/api/auth/login')
+            .send({
+                email: "superadmin@superadmin.com",
+				password: 'superAdmin123#'
+            })
+        superAdminToken = body.token;
+        expect(status).toBe(200);
+        expect(body.message).toBe("User logged successfully");
+    })
+})
+
+describe ("Users API endpoints" , () => {
+    test("Getting user by email bad => Not superAdmin role", async () => {
+        const {status, body} = await request(server)
+            .get("/api/users?email=notauseremail@notauseremail.com")
+            .set('Authorization', `Bearer ${notSuperAdminToken}`)
+
+        expect(status).toBe(401);
+        expect(body.message).toBe("Unauthorized");
+    })
+
+    test("Getting user by email bad => Not giving an user email", async () => {
+        const {status, body} = await request(server)
+            .get("/api/users?email=notauseremail@notauseremail.com")
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(404);
+        expect(body.message).toBe("You cant find a user with that email");
+    })
+
+    test("Getting user by email correctly", async () => {
+        const {status, body} = await request(server)
+            .get("/api/users?email=usertest@usertest.com")
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200);
+        expect(body.message).toBe("User retrieved succesfully");
+    })
+
+    test("Getting all user correctly", async () => {
+        const {status, body} = await request(server)
+            .get('/api/users')
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200);
+        expect(body.message).toBe("Users retrieved succesfully");
+        expect(body.data.length).toBe(15);
+    })
+
+    test("Getting user by token correctly", async () => {
+        const {status, body} = await request(server)
+            .get("/api/users/profile")
+            .set('Authorization', `Bearer ${notSuperAdminToken}`)
+
+        expect(status).toBe(200);
+        expect(body.message).toBe("User profile retrieved succesfully")
+        expect(body.data.name = "userTest");
+    })
+
+    test("Getting posts from user bad => No posts", async () => {
+        const {status, body} = await request(server)
+            .get(`/api/users/posts/${adminFromSeederId}`)
+            .set('Authorization', `Bearer ${notSuperAdminToken}`)
+
+        expect(status).toBe(404);
+        expect(body.message).toBe("No posts from that user have been found")
+    })
+
+    test("Getting posts from user correctly", async () => {
+        const {status, body} = await request(server)
+            .get(`/api/users/posts/${userFromSeederId}`)
+            .set('Authorization', `Bearer ${notSuperAdminToken}`)
+
+        expect(status).toBe(200);
+        expect(body.message).toBe("Posts retrieved succesfully")
+        expect(body.data.length = 1);
     })
 })
 
