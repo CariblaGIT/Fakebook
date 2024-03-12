@@ -9,8 +9,9 @@ let server;
 let superAdminToken;
 let notSuperAdminToken;
 let userCreatedInTestsId;
+let postCreatedInTestsId;
 const userFromSeederId = "65ed7d2f6fa9305f1c424410";
-const adminFromSeederId = "65ed7d2f6fa9305f1c42440e";
+const superAdminFromSeederId = "65ed7d2f6fa9305f1c42440d";
 
 beforeAll(async () => {
     await dbConnection()
@@ -193,7 +194,7 @@ describe ("Users API endpoints" , () => {
 
     test("Getting posts from user bad => No posts", async () => {
         const {status, body} = await request(server)
-            .get(`/api/users/posts/${adminFromSeederId}`)
+            .get(`/api/users/posts/${superAdminFromSeederId}`)
             .set('Authorization', `Bearer ${notSuperAdminToken}`)
 
         expect(status).toBe(404)
@@ -323,6 +324,61 @@ describe ("Users API endpoints" , () => {
 
         expect(status).toBe(200)
         expect(body.message).toBe("User deleted succesfully")
+    })
+})
+
+describe ("Posts API endpoints" , () => {
+    test("Posting by token bad => No given minimum text", async () => {
+        const {status, body} = await request(server)
+            .post('/api/posts/')
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(400)
+        expect(body.message).toBe("Needed to have a text to create a post")
+    })
+
+    test("Posting by token correctly", async () => {
+        const {status, body} = await request(server)
+            .post('/api/posts/')
+            .send({
+                text: "Today has been a great day for uploading a comment on Fakebook"
+            })
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        postCreatedInTestsId = body.data._id
+        expect(status).toBe(201)
+        expect(body.message).toBe("Post uploaded succesfully")
+        expect(body.data.owner = superAdminFromSeederId)
+        expect(body.data.text = "Today has been a great day for uploading a comment on Fakebook")
+    })
+
+    test("Getting posts correctly", async () => {
+        const {status, body} = await request(server)
+            .get('/api/posts/')
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Posts retrieved succesfully")
+        expect(body.data.length = 3)
+    })
+
+    test("Getting own posts bad => No posts from user", async () => {
+        const {status, body} = await request(server)
+            .get('/api/posts/own')
+            .set('Authorization', `Bearer ${notSuperAdminToken}`)
+
+        expect(status).toBe(404)
+        expect(body.message).toBe("No posts from that user have been found")
+    })
+
+    test("Getting own posts correctly", async () => {
+        const {status, body} = await request(server)
+            .get('/api/posts/own')
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Posts retrieved succesfully")
+        expect(body.data.length = 1)
     })
 })
 

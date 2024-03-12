@@ -10,7 +10,7 @@ export const makingPost = async (req, res) => {
             throw new Error ("Needed to have a text to create a post");
         }
 
-        await Post.create({
+        const postCreated = await Post.create({
             content,
             text,
             owner
@@ -18,7 +18,8 @@ export const makingPost = async (req, res) => {
 
         return res.status(201).json({
             success: true,
-            message: "Post uploaded succesfully"
+            message: "Post uploaded succesfully",
+            data: postCreated
         })
     } catch (error) {
         handleError(res, error.message)
