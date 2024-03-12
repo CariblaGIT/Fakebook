@@ -24,6 +24,8 @@
 * Encryptation of the user password using bcrypt
 * Data simulated with seeders and generated using faker
 
+<img src="./src/core/img/socialMedia.png" width="100%">
+
 ## 🎯 Project objective
 
 This API is a project focused on the correct implementation of the methods, structure and parts related to the backend of an application that uses a personalized API REST. Focusing on the bussiness model, this project tries to represent how will be the back-end logic for a social media application, with the users related to the posts and the interactions that have the users with the posts (giving or removing likes, commenting or deleting / removing them) and between them (following or unfollowing to track the posts and activity). 
@@ -88,9 +90,13 @@ The API is a non relational API in which there are Users and Posts, that are ref
 
 ### Endpoints and what does each one
 
+<img src="./src/core/img/api.png" align="left" width="200" height="200"/>
+
 On this section, are shown all the endpoints from my API and what does each one, splitted by the differents methods and tables that are related with the consult. <b>IMPORTANT</b>: The super_admin restricted methods are only usable if a user from the DB has logged in using the /auth/login method and has assigned that role, generating a JWT token saved on the request at the tokenData object inside it. If you are using some applications like Postman to check that security, you have to copy paste it inside the Bearer Token Authorization tab. Moreover, there are some other methods that has to be logged as /profile or GET /posts.
 
 Also, here you will get the data from 4 users and 2 posts that are created by the seeder as default users, to have data to make the petitions you desire (if you dont execute the seeder, you will not have created this data, and you will not create the random data for all the entities too):
+
+<br>
 
 * USERS
 
