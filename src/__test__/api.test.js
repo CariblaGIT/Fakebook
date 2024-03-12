@@ -8,6 +8,7 @@ import { dbConnection } from "../db.js";
 let server;
 let superAdminToken;
 let notSuperAdminToken;
+let userCreatedInTestsId;
 const userFromSeederId = "65ed7d2f6fa9305f1c424410";
 const adminFromSeederId = "65ed7d2f6fa9305f1c42440e";
 
@@ -184,6 +185,7 @@ describe ("Users API endpoints" , () => {
             .get("/api/users/profile")
             .set('Authorization', `Bearer ${notSuperAdminToken}`)
 
+        userCreatedInTestsId = body.data._id
         expect(status).toBe(200)
         expect(body.message).toBe("User profile retrieved succesfully")
         expect(body.data.name = "userTest")
@@ -250,7 +252,7 @@ describe ("Users API endpoints" , () => {
             })
             .set('Authorization', `Bearer ${notSuperAdminToken}`)
 
-        expect(status).toBe(200);
+        expect(status).toBe(200)
         expect(body.message).toBe("User profile updated succesfully")
         expect(body.data.email = "usertestchanged@usertestchanged.com")
     })
@@ -263,7 +265,7 @@ describe ("Users API endpoints" , () => {
             })
             .set('Authorization', `Bearer ${notSuperAdminToken}`)
 
-        expect(status).toBe(400);
+        expect(status).toBe(400)
         expect(body.message).toBe("Format password invalid")
     })
 
@@ -275,9 +277,52 @@ describe ("Users API endpoints" , () => {
             })
             .set('Authorization', `Bearer ${notSuperAdminToken}`)
 
-        expect(status).toBe(200);
+        expect(status).toBe(200)
         expect(body.message).toBe("User profile updated succesfully")
         expect(body.data.password = bcrypt.hashSync("UserTestChangedPassword123#", 5))
+    })
+
+    test("Modifying user role bad => Not giving params", async () => {
+        const {status, body} = await request(server)
+            .put(`/api/users/${userFromSeederId}/role`)
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(400)
+        expect(body.message).toBe("Need a role to update a user role")
+    })
+
+    test("Modifying user role bad => Not giving correct role", async () => {
+        const {status, body} = await request(server)
+            .put(`/api/users/${userFromSeederId}/role`)
+            .send({
+                role: "not_a_role_from_db"
+            })
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(400)
+        expect(body.message).toBe("Not valid role")
+    })
+
+    test("Modifying user role correctly", async () => {
+        const {status, body} = await request(server)
+            .put(`/api/users/${userFromSeederId}/role`)
+            .send({
+                role: "admin"
+            })
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Changed role succesfully")
+        expect(body.data.role = "admin")
+    })
+
+    test("Deleting user correctly", async () => {
+        const {status, body} = await request(server)
+            .delete(`/api/users/${userCreatedInTestsId}`)
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("User deleted succesfully")
     })
 })
 

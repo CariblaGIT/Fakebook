@@ -41,7 +41,7 @@ export const getProfile = async (req, res) => {
     try {
         const userId = req.tokenData.userId;
 
-        const user = await User.findById(userId, 'name email -_id');
+        const user = await User.findById(userId, 'name email _id');
 
         return res.status(200).json({
             success: true,
@@ -138,12 +138,17 @@ export const changeUserRole = async (req, res) => {
     try {
         const userId = req.params.id
         const role = req.body.role
+        const possibleRoles = ["super_admin", "admin", "user"];
 
         if(!role){
             throw new Error("Need a role to update a user role")
         }
 
-        await User.findByIdAndUpdate(
+        if (!possibleRoles.includes(role)){
+            throw new Error("Not valid role")
+        }
+
+        const userRoleChanged = await User.findByIdAndUpdate(
             userId,
             {
                 role: role
@@ -152,7 +157,8 @@ export const changeUserRole = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "Changed role succesfully"
+            message: "Changed role succesfully",
+            data: userRoleChanged
         })
     } catch (error) {
         handleError(res, error.message)
