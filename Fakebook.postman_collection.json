@@ -1,0 +1,415 @@
+{
+	"info": {
+		"_postman_id": "2ffe7cc7-438f-4963-ae01-92e56bafa1e9",
+		"name": "Fakebook",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "15847842"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "GetUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjNGNmYmVhMjczOTk5YWU5ODI1ZWUiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTg1MDU5fQ.ruUCFptHhmc9vAJfA0SIkj7EzBHmAonIkqq9l7cOz4k"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/users",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "carlosibanezescolapias@gmail.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjMjkzNDdmNGIxMWI1OWJjYjdjYTQiLCJyb2xlTmFtZSI6InVzZXIiLCJpYXQiOjE3MDk5ODE1MjR9.hMVbQ74BTdAxvyMLwHQxT4x1LJ1GnchxEiVGSVybA3g"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{server}}/api/users/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserPosts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjNGNmYmVhMjczOTk5YWU5ODI1ZWUiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTg1MDU5fQ.ruUCFptHhmc9vAJfA0SIkj7EzBHmAonIkqq9l7cOz4k"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{server}}/api/users/posts/65ed7d2f6fa9305f1c424410"
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserTimeline",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVkN2QyZjZmYTkzMDVmMWM0MjQ0MGQiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwMjY5NjQ2fQ.HgIEmY81mMy9kG3kWM3kc26FnOpVu9x0SQID2yoqrjs"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{server}}/api/posts/timeline"
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"user2\",\r\n    \"email\": \"user2@user2.com\",\r\n    \"password\": \"User12345#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{server}}/api/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "LoginUsers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"superadmin@superadmin.com\",\r\n    \"password\": \"superAdmin123#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{server}}/api/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjMjkzNDdmNGIxMWI1OWJjYjdjYTQiLCJyb2xlTmFtZSI6InVzZXIiLCJpYXQiOjE3MDk5ODE1MjR9.hMVbQ74BTdAxvyMLwHQxT4x1LJ1GnchxEiVGSVybA3g"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"carlosibanezescolapias@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{server}}/api/users/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "FollowInteraction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVkN2QyZjZmYTkzMDVmMWM0MjQ0MGQiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwMjY5NjQ2fQ.HgIEmY81mMy9kG3kWM3kc26FnOpVu9x0SQID2yoqrjs"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"url": "{{server}}/api/users/following/65ed7d2f6fa9305f1c42440e"
+					},
+					"response": []
+				},
+				{
+					"name": "ChangeRoleToUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjNGNmYmVhMjczOTk5YWU5ODI1ZWUiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTg1MDU5fQ.ruUCFptHhmc9vAJfA0SIkj7EzBHmAonIkqq9l7cOz4k"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{server}}/api/users/65ec517f92740deb056c617f/role"
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjNGNmYmVhMjczOTk5YWU5ODI1ZWUiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTg1MDU5fQ.ruUCFptHhmc9vAJfA0SIkj7EzBHmAonIkqq9l7cOz4k"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{server}}/api/users/65ec29347f4b11b59bcb7ca4"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "OwnPosts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVkN2QyZjZmYTkzMDVmMWM0MjQ0MGQiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwMjY5NjQ2fQ.HgIEmY81mMy9kG3kWM3kc26FnOpVu9x0SQID2yoqrjs"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{server}}/api/posts/own"
+					},
+					"response": []
+				},
+				{
+					"name": "AllPosts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjNGNmYmVhMjczOTk5YWU5ODI1ZWUiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTg1MDU5fQ.ruUCFptHhmc9vAJfA0SIkj7EzBHmAonIkqq9l7cOz4k"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{server}}/api/posts"
+					},
+					"response": []
+				},
+				{
+					"name": "GetPostById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjNGNmYmVhMjczOTk5YWU5ODI1ZWUiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTg1MDU5fQ.ruUCFptHhmc9vAJfA0SIkj7EzBHmAonIkqq9l7cOz4k"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{server}}/api/posts/65ed83d651c924dbeba1bf99"
+					},
+					"response": []
+				},
+				{
+					"name": "MakingPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjNGNmYmVhMjczOTk5YWU5ODI1ZWUiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTg1MDU5fQ.ruUCFptHhmc9vAJfA0SIkj7EzBHmAonIkqq9l7cOz4k"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": \"Today bad day on Fakebook\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{server}}/api/posts"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjNGNmYmVhMjczOTk5YWU5ODI1ZWUiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTg1MDU5fQ.ruUCFptHhmc9vAJfA0SIkj7EzBHmAonIkqq9l7cOz4k"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"postId\": \"65ecaec03686f52e95516da0\",\r\n    \"text\": \"It was a wonderful day to post here on Fakebook, but now no :(\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{server}}/api/posts"
+					},
+					"response": []
+				},
+				{
+					"name": "GivingOrRemovingLike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjNGNmYmVhMjczOTk5YWU5ODI1ZWUiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTg1MDU5fQ.ruUCFptHhmc9vAJfA0SIkj7EzBHmAonIkqq9l7cOz4k"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"url": "{{server}}/api/posts/like/65ed83d651c924dbeba1bf9b"
+					},
+					"response": []
+				},
+				{
+					"name": "CommentingOnPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVkN2QyZjZmYTkzMDVmMWM0MjQ0MGQiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwMjY5NjQ2fQ.HgIEmY81mMy9kG3kWM3kc26FnOpVu9x0SQID2yoqrjs"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\": \"GORGEOUS! :D\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{server}}/api/posts/comment/65ed83d651c924dbeba1bf9b"
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVjNGNmYmVhMjczOTk5YWU5ODI1ZWUiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzA5OTg1MDU5fQ.ruUCFptHhmc9vAJfA0SIkj7EzBHmAonIkqq9l7cOz4k"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{server}}/api/posts/65ecaec03686f52e95516da0"
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCommentOnPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVkN2QyZjZmYTkzMDVmMWM0MjQ0MGQiLCJyb2xlTmFtZSI6InN1cGVyX2FkbWluIiwiaWF0IjoxNzEwMjY5NjQ2fQ.HgIEmY81mMy9kG3kWM3kc26FnOpVu9x0SQID2yoqrjs"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{server}}/api/posts/65ed83d651c924dbeba1bf9b/comment/65f2c16d3baadd0463a67c9a"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Healthy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{server}}/api/healthy"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": "https://fakebook-dev-zmcq.1.ie-1.fl0.io",
+			"type": "string"
+		},
+		{
+			"key": "local",
+			"value": "http://localhost:4000/",
+			"type": "string"
+		}
+	]
+}
