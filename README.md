@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="./src/core/img/logo.png" alt="Markdownify" width="200"></a>
+  <a href="https://github.com/CariblaGIT/Fakebook/"><img src="./src/core/img/logo.png" alt="Markdownify" width="200"></a>
 </h1>
 
 <h4 align="center">API for social media application</h4>
@@ -61,6 +61,9 @@ This API is a project focused on the correct implementation of the methods, stru
 ## 👨‍💻 Installation
 
 Follow the steps to emulate the project in your local device. But is not necessary because the project has been uploaded to FL0, so you can skip the installation and use the following URL to make all the consults in front of your localhost one: 
+<div align="center">
+<a href="https://fakebook-dev-zmcq.1.ie-1.fl0.io/api/healthy">🚀 API Deployed on FL0 🚀</a>
+</div>
 
 1. Clone repo
 2. Install dependencies:
@@ -121,6 +124,7 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
         "email": "user@user.com",
         "password": "User12345#",
         "role": "user",
+        "following": ["65ed7d2f6fa9305f1c424410"],
         "_id": "65ed7d2f6fa9305f1c42440f"
     },
     {
@@ -128,6 +132,7 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
         "email": "user2@user2.com",
         "password": "User12345#",
         "role": "user",
+        "followers": ["65ed7d2f6fa9305f1c42440f"],
         "_id": "65ed7d2f6fa9305f1c424410"
     }
 }
@@ -184,7 +189,7 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 * IMPORTANT: To do all actions related to post, you have to be logged in, and on the interactions will be involved the user that has been logged in using the auth/login endpoint token
 
 | METHOD     | URL                              | Description                                                                |
-| ---------- | -------------------------        | -------------------------------------------------------------------------- |
+| ---------- | -------------------------------- | -------------------------------------------------------------------------- |
 | `GET`      |`/api/posts`                      | Get all posts done from all users from DB                                  |
 | `GET`      |`/api/posts/own`                  | Get all posts from user logged in                                          |
 | `GET`      |`/api/posts/timeline`             | Get all posts from following users ordered by time with ID given in token  |
@@ -194,7 +199,7 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 | `UPDATE`   |`/api/posts/comment/{id}`         | Posting a comment into a post done by some user while you logged in        |
 | `UPDATE`   |`/api/posts/like/{id}`            | Giving / Removing a like from a post done by some user while you logged in |
 | `DELETE`   |`/api/posts/{id}`                 | Delete a post by ID from the DB done by the user                           |
-| `DELETE`   |`/api/posts/{postId}/comment{id}` | Delete a comment from post by IDs from the DB done by the user             |
+| `DELETE`   |`/api/posts/{postId}/comment/{id}`| Delete a comment from post by IDs from the DB done by the user             |
 
 
 ### Body to give and in which method is required to use it
@@ -245,7 +250,7 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 
 ⬜ Implementing front-end to use the API
 <br>
-⬜ Implementing testing for all the methods to check the correct working of the API
+✅ Implementing testing for all the methods to check the correct working of the API
 <br>
 ⬜ Adding some features to users like themes, personal information, etc
 
