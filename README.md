@@ -310,5 +310,5 @@ Also, here is provided a Postman collection with all the methods and 2 variables
 ------
 
 <div align="center">
-<a href="#API for social media application">🔼 Back to top 🔼</a>
+<a href="#API-for-social-media-application">🔼 Back to top 🔼</a>
 </div>
