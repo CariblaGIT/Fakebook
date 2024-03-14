@@ -182,16 +182,17 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 
 * IMPORTANT: To do all actions related to post, you have to be logged in, and on the interactions will be involved the user that has been logged in using the auth/login endpoint token
 
-| METHOD     | URL                       | Description                                                                |
-| ---------- | ------------------------- | -------------------------------------------------------------------------- |
-| `GET`      |`/api/posts`               | Get all posts done from all users from DB                                  |
-| `GET`      |`/api/posts/own`           | Get all posts from user logged in                                          |
-| `GET`      |`/api/posts/{id}`          | Get all posts from a user by ID given                                      |
-| `POST`     |`/api/posts`               | Making and uploading a post into DB                                        |
-| `UPDATE`   |`/api/posts/`              | Update a post by ID given into the body                                    |
-| `UPDATE`   |`/api/posts/comment/{id}`  | Posting a comment into a post done by some user while you logged in        |
-| `UPDATE`   |`/api/posts/like/{id}`     | Giving / Removing a like from a post done by some user while you logged in |
-| `DELETE`   |`/api/posts/{id}`          | Delete a post by ID from the DB done by the user                           |
+| METHOD     | URL                              | Description                                                                |
+| ---------- | -------------------------        | -------------------------------------------------------------------------- |
+| `GET`      |`/api/posts`                      | Get all posts done from all users from DB                                  |
+| `GET`      |`/api/posts/own`                  | Get all posts from user logged in                                          |
+| `GET`      |`/api/posts/{id}`                 | Get all posts from a user by ID given                                      |
+| `POST`     |`/api/posts`                      | Making and uploading a post into DB                                        |
+| `UPDATE`   |`/api/posts/`                     | Update a post by ID given into the body                                    |
+| `UPDATE`   |`/api/posts/comment/{id}`         | Posting a comment into a post done by some user while you logged in        |
+| `UPDATE`   |`/api/posts/like/{id}`            | Giving / Removing a like from a post done by some user while you logged in |
+| `DELETE`   |`/api/posts/{id}`                 | Delete a post by ID from the DB done by the user                           |
+| `DELETE`   |`/api/posts/{postId}/comment{id}` | Delete a comment from post by IDs from the DB done by the user             |
 
 
 ### Body to give and in which method is required to use it

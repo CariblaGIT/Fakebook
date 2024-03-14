@@ -10,9 +10,11 @@ export const handleError = (res, errorMessage) => {
             break;
         case "Unauthorized to delete that post":
         case "Unauthorized to change that post":
+        case "Unauthorized to delete that comment":
             statusCode = 401
             break;
         case "No posts from that user have been found":
+        case "No comment from that post":
             statusCode = 404
             break;
     }

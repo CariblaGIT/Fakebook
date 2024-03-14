@@ -199,3 +199,42 @@ export const makingCommentIntoPost = async (req, res) => {
         handleError(res, error.message)
     }
 }
+
+export const deleteComment = async (req, res) => {
+    try {
+        const commentId = req.params.id;
+        const postId = req.params.postId;
+        const userId = req.tokenData.userId;
+
+        const postInteracted = await Post.findById(postId);
+
+        const comments = postInteracted.comments;
+        let comment;
+
+        for(let i = 0; i < comments.length; i++){
+            if((comments[i]._id).toString() === commentId){
+                comment = comments[i]
+            }
+        }
+
+        if(!comment){
+            throw new Error ("No comment from that post")
+        }
+
+        if((comment.user).toString() !== userId){
+            throw new Error ("Unauthorized to delete that comment")
+        }
+
+        postInteracted.comments.pull(comment);
+
+        await postInteracted.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Comment into post removed succesfully",
+            data: postInteracted
+        })
+    } catch (error) {
+        handleError(res, error.message)
+    }
+}
