@@ -318,6 +318,25 @@ describe ("Users API endpoints" , () => {
         expect(body.data.role = "admin")
     })
 
+    test("Following user bad => Same IDs = You cant follow yourself", async () => {
+        const {status, body} = await request(server)
+            .put(`/api/users/follow/${superAdminFromSeederId}`)
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(400)
+        expect(body.message).toBe("You cant follow yourself")
+    })
+
+    test("Following user correctly", async () => {
+        const {status, body} = await request(server)
+            .put(`/api/users/follow/${userFromSeederId}`)
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Follow or unfollow user succesfully")
+        expect(body.data.following.length = 1)
+    })
+
     test("Deleting user correctly", async () => {
         const {status, body} = await request(server)
             .delete(`/api/users/${userCreatedInTestsId}`)
