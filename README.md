@@ -56,6 +56,9 @@ This API is a project focused on the correct implementation of the methods, stru
 <a href="https://nodejs.org/en" style="text-decoration:none">
     <img src= "https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
 </a>
+<a href="https://babeljs.io/" style="text-decoration:none">
+    <img src= "https://img.shields.io/badge/babel-E5CD04?style=for-the-badge&logo=babel&logoColor=black"/>
+</a>
 </div>
 
 ## 👨‍💻 Installation
@@ -205,6 +208,9 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 ### Body to give and in which method is required to use it
 
 * POST in /api/auth/register
+<details>
+The body that you have to send to that endpoint is the following one:
+
 ```JSON
 {
     "name" : "Mariano",
@@ -212,32 +218,51 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
     "password": "1Az*F3x$KEq2ZX"
 }
 ```
+</details>
+<br>
 
 * POST in /api/auth/login
+<details>
+The body that you have to send to that endpoint is the following one:
+
 ```JSON
 {
     "email" : "superadmin@superadmin.com",
     "password": "superAdmin"
 }
 ```
+</details>
+<br>
 
-* GET in api/users (could be without body if you want to get all users)
+* GET in api/users 
+<details>
+This method can be passed an email as is shown below (to find a user with that email assigned) or without body to get all users. Beign this a super_admin method, you have to put a token generated on the login method as an authentication parameter:
+
 ```JSON
 {
     "email": "user@user.com"
 }
 ```
+</details>
+<br>
 
+* POST in api/posts
+<details>
+This method can be passed a text and a img or video as a content (content uploaded on internet), but minimum has to have the text key and text value. To use this method, you have to be logged in as a user (can be all types of role users) passing the token generated on the login method as an authentication parameter:
 
-* POST in api/posts (minimum has to have a text)
 ```JSON
 {
     "content": "https://www.randomURL.com",
     "text": "Description or text relating a moment to focus",
 }
 ```
+</details>
+<br>
 
-* PUT in api/posts/:id (you can select some or all this params inside the body, but IS NECESSARY THE ID)
+* PUT in api/posts/:id
+<details>
+This method can be passed a text and a img or video as a content to update (content uploaded on internet), but minimum has to have the text key and text value and the ID of the post that is going to be updated. To use this method, you have to be logged in as a user (can be all types of role users) passing the token generated on the login method as an authentication parameter, and that user has to posted that post:
+
 ```JSON
 {
     "postId": "123456789",
@@ -245,6 +270,10 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
     "text": "Text changed because you dont like it previously",
 }
 ```
+</details>
+<br>
+
+Also, here is provided a Postman collection with all the methods and 2 variables: server (if the atlas database is up) and local (if you have done all the installation setup to launch the application on local), to test all endpoints => [Open this file in Postman client and test de API](./Fakebook.postman_collection.json)
 
 ## 🛠️ Future improvements
 
@@ -254,12 +283,6 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 <br>
 ⬜ Adding some features to users like themes, personal information, etc
 
-## 💪 Support
-
-<div align="center">
-<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important; box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-</div>
-
 ## 👀 You may also like...
 
 - [Between Sins](https://gitlab.com/daghdha1/betweensins) - RPG videogame 
@@ -268,4 +291,10 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 <div align="center">
 <a href="https://www.linkedin.com/in/carlos-ibañez-lamas-74487b228/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
 <a href="https://gitlab.com/CariblaGTI" target="_blank"><img src="https://img.shields.io/badge/GitLab-330F63?style=for-the-badge&logo=gitlab&logoColor=white" target="_blank"></a>
+</div>
+
+------
+
+<div align="center">
+<a href="#API for social media application">🔼 Back to top 🔼</a>
 </div>
