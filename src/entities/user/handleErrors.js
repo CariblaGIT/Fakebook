@@ -6,6 +6,7 @@ export const handleError = (res, errorMessage) => {
         case "Email format invalid":
         case "Need to bring data to update a user":
         case "Not valid role":
+        case "You cant follow yourself":
             statusCode = 400
             break;
         case "You cant find a user with that email":

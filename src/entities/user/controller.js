@@ -164,3 +164,36 @@ export const changeUserRole = async (req, res) => {
         handleError(res, error.message)
     }
 }
+
+export const followOrUnfollowUser = async (req, res) => {
+    try {
+        const userId = req.tokenData.userId;
+        const userToFollowInteractionId = req.params.id;
+
+        if(userId === userToFollowInteractionId){
+            throw new Error("You cant follow yourself")
+        }
+
+        const user = await User.findById(userId);
+        const userToFollowInteraction = await User.findById(userToFollowInteractionId);
+
+        if(user.following.includes(userToFollowInteractionId)){
+            user.following.pull(userToFollowInteractionId);
+            userToFollowInteraction.followers.pull(userId);
+        } else {
+            user.following.push(userToFollowInteractionId);
+            userToFollowInteraction.followers.push(userId);
+        }
+
+        await user.save();
+        await userToFollowInteraction.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Follow or unfollow user succesfully",
+            data: user
+        })
+    } catch (error) {
+        handleError(res, error.message)
+    }
+}

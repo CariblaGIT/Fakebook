@@ -176,6 +176,7 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 | `GET`      |`/api/users/posts/{id}`    | Get all posts from a user from the application                             |
 | `UPDATE`   |`/api/users/profile`       | Update profile from user logged into the API                               |
 | `UPDATE`   |`/api/users/{id}/role`     | Update a role from user by ID into DB (only for super_admin users)         |
+| `UPDATE`   |`/api/users/follow/{id}`   | Update a user by following or not another user from app                    |
 | `DELETE`   |`/api/users/{id}`          | Delete a user by ID from the DB (only for super_admin users)               |
 
 #### Posts entity
