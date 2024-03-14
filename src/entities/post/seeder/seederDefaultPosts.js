@@ -18,7 +18,8 @@ export const seederDefaultPosts = async () => {
                 comments: [{
                     user: user2Id,
                     comment: "Wow! What an amazing view from there. Enjoy the travel :)"
-                }]
+                }],
+                _id: new mongoose.Types.ObjectId("65ed83d651c924dbeba1bf9b")
             },
             {
                 content: "https://andreuworld.com/media/catalog/product/import/galeria/proyectos/andreu_world_suitopia_hotel_6.webp",
@@ -28,7 +29,8 @@ export const seederDefaultPosts = async () => {
                 comments: [{
                     user: user1Id,
                     comment: "Bartender! Cup here :3"
-                }]
+                }],
+                _id: new mongoose.Types.ObjectId("65ed83d651c924dbeba1bf99")
             }
 		]);
 		console.log("Post created");

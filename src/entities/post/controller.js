@@ -154,8 +154,7 @@ export const giveOrRemoveLikePost = async (req, res) => {
         });
 
         if(isLiked){
-            const userPosition = postInteracted.likes.indexOf(userId);
-            postInteracted.likes.splice(userPosition, 1);
+            postInteracted.likes.pull(userId);
             await postInteracted.save();
         } else {
             postInteracted.likes.push(userId);
@@ -165,6 +164,35 @@ export const giveOrRemoveLikePost = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Giving or removing like to post done succesfully",
+            data: postInteracted
+        })
+    } catch (error) {
+        handleError(res, error.message)
+    }
+}
+
+export const makingCommentIntoPost = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.tokenData.userId;
+        const comment = req.body.comment;
+
+        if(!comment){
+            throw new Error("No comment text introduced");
+        }
+
+        const postInteracted = await Post.findById(postId);
+
+        postInteracted.comments.push({
+            user: userId,
+            comment
+        })
+
+        await postInteracted.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Comment into post done succesfully",
             data: postInteracted
         })
     } catch (error) {

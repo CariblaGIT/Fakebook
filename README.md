@@ -189,7 +189,8 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 | `GET`      |`/api/posts/{id}`          | Get all posts from a user by ID given                                      |
 | `POST`     |`/api/posts`               | Making and uploading a post into DB                                        |
 | `UPDATE`   |`/api/posts/`              | Update a post by ID given into the body                                    |
-| `UPDATE`   |`/api/posts/like/{id}`     | Giving or removing a like from a post done by the user logged in           |
+| `UPDATE`   |`/api/posts/comment/{id}`  | Posting a comment into a post done by some user while you logged in        |
+| `UPDATE`   |`/api/posts/like/{id}`     | Giving / Removing a like from a post done by some user while you logged in |
 | `DELETE`   |`/api/posts/{id}`          | Delete a post by ID from the DB done by the user                           |
 
 

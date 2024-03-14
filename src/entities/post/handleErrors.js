@@ -5,6 +5,7 @@ export const handleError = (res, errorMessage) => {
         case "Needed to have a text to create a post":
         case "No introduced data to update the post":
         case "No introduced post reference":
+        case "No comment text introduced":
             statusCode = 400
             break;
         case "Unauthorized to delete that post":
