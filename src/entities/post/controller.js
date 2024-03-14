@@ -1,3 +1,4 @@
+import User from "../user/User.js";
 import Post from "./Post.js";
 import { handleError } from "./handleErrors.js";
 
@@ -233,6 +234,25 @@ export const deleteComment = async (req, res) => {
             success: true,
             message: "Comment into post removed succesfully",
             data: postInteracted
+        })
+    } catch (error) {
+        handleError(res, error.message)
+    }
+}
+
+export const getTimeline = async (req, res) => {
+    try {
+        const userId = req.tokenData.userId;
+
+        const user = await User.findById(userId);
+        const followingUsers = user.following;
+
+        const postTimeline = await Post.find({owner: {$in: followingUsers}}).sort({createdAt: 'descending'})
+
+        return res.status(200).json({
+            success: true,
+            message: "Posts timeline retrieved succesfully",
+            data: postTimeline
         })
     } catch (error) {
         handleError(res, error.message)
