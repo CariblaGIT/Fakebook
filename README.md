@@ -175,7 +175,7 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 | `POST`     |`/api/auth/register`      | Register method to create an user (by default, will have the user role)     |                    
 | `POST`     |`/api/auth/login`         | Login a user into the service                                               |
 
-#### Users enity
+#### Users entity
 
 | METHOD     | URL                       | Description                                                                |
 | ---------- | ------------------------- | -------------------------------------------------------------------------- |
@@ -272,6 +272,20 @@ This method can be passed a text and a img or video as a content to update (cont
 ```
 </details>
 <br>
+
+* PUT in api/posts/comment/:id
+<details>
+This method has to have a comment key and a comment value as a string referencing to the text on the body. To use this method, you have to be logged in as a user (can be all types of role users) passing the token generated on the login method as an authentication parameter, and that user has to posted that post:
+
+```JSON
+{
+    "comment": "This is a comment to do on a posts",
+}
+```
+</details>
+<br>
+
+* The other methods of this API will require you tu be logged in
 
 Also, here is provided a Postman collection with all the methods and 2 variables: server (if the atlas database is up) and local (if you have done all the installation setup to launch the application on local), to test all endpoints => [Open this file in Postman client and test de API](./Fakebook.postman_collection.json)
 
