@@ -10,6 +10,7 @@ let superAdminToken;
 let notSuperAdminToken;
 let userCreatedInTestsId;
 let postCreatedInTestsId;
+let commentCreatedInTestId;
 const userFromSeederId = "65ed7d2f6fa9305f1c424410";
 const superAdminFromSeederId = "65ed7d2f6fa9305f1c42440d";
 
@@ -494,6 +495,50 @@ describe ("Posts API endpoints" , () => {
         expect(status).toBe(200)
         expect(body.message).toBe("Giving or removing like to post done succesfully")
         expect(body.data.likes.length = 0)
+    })
+
+    test("Commenting to post bad => Not giving comment text", async () => {
+        const {status, body} = await request(server)
+            .put(`/api/posts/comment/${postCreatedInTestsId}`)
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(400)
+        expect(body.message).toBe("No comment text introduced")
+    })
+
+    test("Commenting to post bad => Not existing comment", async () => {
+        const {status, body} = await request(server)
+            .put(`/api/posts/comment/1`)
+            .send({
+                comment: "Great comment test"
+            })
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(500)
+    })
+
+    test("Commenting to post correctly", async () => {
+        const {status, body} = await request(server)
+            .put(`/api/posts/comment/${postCreatedInTestsId}`)
+            .send({
+                comment: "Great comment test"
+            })
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        commentCreatedInTestId = body.data.comments[0]._id;
+        expect(status).toBe(200)
+        expect(body.message).toBe("Comment into post done succesfully")
+        expect(body.data.comments.length = 1)
+    })
+
+    test("Delete comment from post correctly", async () => {
+        const {status, body} = await request(server)
+            .delete(`/api/posts/${postCreatedInTestsId}/comment/${commentCreatedInTestId}`)
+            .set('Authorization', `Bearer ${superAdminToken}`)
+            
+        expect(status).toBe(200)
+        expect(body.message).toBe("Comment into post removed succesfully")
+        expect(body.data.comments.length = 0)
     })
 
     test("Deleting post bad => Not user post", async () => {
