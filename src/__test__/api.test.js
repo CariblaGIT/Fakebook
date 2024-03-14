@@ -419,6 +419,16 @@ describe ("Posts API endpoints" , () => {
         expect(body.data.text = "Today has been a great day for uploading a comment on Fakebook")
     })
 
+    test("Getting timeline from user successfully", async () => {
+        const {status, body} = await request(server)
+            .get('/api/posts/timeline')
+            .set('Authorization', `Bearer ${superAdminToken}`)
+
+        expect(status).toBe(200)
+        expect(body.message).toBe("Posts timeline retrieved succesfully")
+        expect(body.data.length = 1)
+    })
+
     test("Updating post text bad => No giving postId", async () => {
         const {status, body} = await request(server)
             .put('/api/posts/')
