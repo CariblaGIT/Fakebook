@@ -33,7 +33,7 @@ export const seederDefaultPosts = async () => {
                 _id: new mongoose.Types.ObjectId("65ed83d651c924dbeba1bf99")
             }
 		]);
-		console.log("Post created");
+		console.log("Default posts created");
 	} catch (error) {
 		console.log(error);
 	} finally {

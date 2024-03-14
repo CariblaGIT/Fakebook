@@ -22,7 +22,8 @@ export const randomUsersSeeder = async () => {
             const fakeUser = randomUser();
             usersFaker.push(fakeUser)
         }
-        await User.create(usersFaker)
+        await User.create(usersFaker);
+        console.log("Random users created");
     } catch (error) {
         console.log(error.message);
     } finally {

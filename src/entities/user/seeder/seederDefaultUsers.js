@@ -27,6 +27,7 @@ export const seederDefaultUsers = async () => {
                 email: "user@user.com",
 				password: bcrypt.hashSync('User12345#', 5),
                 role: "user",
+				following: ["65ed7d2f6fa9305f1c424410"],
 				_id: new mongoose.Types.ObjectId("65ed7d2f6fa9305f1c42440f")
             },
             {
@@ -34,10 +35,11 @@ export const seederDefaultUsers = async () => {
                 email: "user2@user2.com",
 				password: bcrypt.hashSync('User12345#', 5),
                 role: "user",
+				followers: ["65ed7d2f6fa9305f1c42440f"],
 				_id: new mongoose.Types.ObjectId("65ed7d2f6fa9305f1c424410")
             }
 		]);
-		console.log("User created");
+		console.log("Default users created");
 	} catch (error) {
 		console.log(error);
 	} finally {
