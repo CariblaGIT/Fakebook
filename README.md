@@ -187,6 +187,7 @@ Also, here you will get the data from 4 users and 2 posts that are created by th
 | ---------- | -------------------------        | -------------------------------------------------------------------------- |
 | `GET`      |`/api/posts`                      | Get all posts done from all users from DB                                  |
 | `GET`      |`/api/posts/own`                  | Get all posts from user logged in                                          |
+| `GET`      |`/api/posts/timeline`             | Get all posts from following users ordered by time with ID given in token  |
 | `GET`      |`/api/posts/{id}`                 | Get all posts from a user by ID given                                      |
 | `POST`     |`/api/posts`                      | Making and uploading a post into DB                                        |
 | `UPDATE`   |`/api/posts/`                     | Update a post by ID given into the body                                    |
