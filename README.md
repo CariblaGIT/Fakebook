@@ -285,7 +285,7 @@ This method has to have a comment key and a comment value as a string referencin
 </details>
 <br>
 
-* The other methods of this API will require you tu be logged in
+* The other methods of this API will require you to be logged in
 
 Also, here is provided a Postman collection with all the methods and 2 variables: server (if the atlas database is up) and local (if you have done all the installation setup to launch the application on local), to test all endpoints => [Open this file in Postman client and test de API](./Fakebook.postman_collection.json)
 
