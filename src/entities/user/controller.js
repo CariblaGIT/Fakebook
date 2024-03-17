@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 import User from "./User.js";
 import Post from "../post/Post.js";
 import { handleError } from "./handleErrors.js";
+import { verifyEmail } from "../../core/utils/verifyEmail.js";
+import { verifyPassword } from "../../core/utils/verifyPassword.js";
 
 export const getUsers = async (req, res) => {
     try {
@@ -83,15 +85,13 @@ export const modifyProfile = async (req, res) => {
         }
 
         if(email){
-            const validEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!validEmail.test(email)) {
+            if (!verifyEmail(email)) {
                 throw new Error("Email format invalid")
             }
         }
 
         if(password){
-            const validPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/;
-            if (password.length < 10 || !validPass.test(password) || password.includes(' ')){
+            if (!verifyPassword(password)){
                 throw new Error("Format password invalid")
             } else {
                 password = bcrypt.hashSync(password, 5);
