@@ -6,14 +6,13 @@
 <h4 align="center">API for social media application</h4>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#project-objective">Project objective</a> •
-  <a href="#stack">Stack</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#api">API</a> •
-  <a href="#future-improvements">Future improvements</a> •
-  <a href="#support">Support</a> •
-  <a href="#you-may-also-like">You may also like...</a>
+  <a href="#-key-features">Key Features</a> •
+  <a href="#-project-objective">Project objective</a> •
+  <a href="#️-stack">Stack</a> •
+  <a href="#-installation">Installation</a> •
+  <a href="#-api">API</a> •
+  <a href="#️-future-improvements">Future improvements</a> •
+  <a href="#-you-may-also-like">You may also like...</a>
 </p>
 
 ## 🔑 Key Features
