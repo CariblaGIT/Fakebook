@@ -91,7 +91,11 @@ Follow the steps to emulate the project in your local device. But is not necessa
 
 ## 🔗 API
 
-The API is a non relational API in which there are Users and Posts, that are referenced with the _id property from the users in the likes, comments and following interactions that have between them
+The API is a non relational API in which there are Users and Posts, that are referenced with the _id property from the users in the likes, comments and following interactions that have between them as is shown on the next diagram:
+
+<div align="center">
+<img src="./src/core/img/Fakebook_Diagram.png">
+</div>
 
 ### Endpoints and what does each one
 
