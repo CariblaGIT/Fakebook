@@ -10,7 +10,7 @@ export const getUsers = async (req, res) => {
         const email = req.query.email;
 
         if(email){
-            const user = await User.findOne({email: email}, '-password');
+            const user = await User.findOne({email: email}, '-password').populate({path: "following followers", select:"name"});
 
             if(user == null){
                 throw new Error("You cant find a user with that email")
@@ -23,7 +23,7 @@ export const getUsers = async (req, res) => {
             })
         }
 
-        const users = await User.find({}, '-password');
+        const users = await User.find({}, '-password').populate({path: "following followers", select:"name"});
 
         if(!users){
             throw new Error("You cant find users")
@@ -43,7 +43,7 @@ export const getProfile = async (req, res) => {
     try {
         const userId = req.tokenData.userId;
 
-        const user = await User.findById(userId, 'name email _id');
+        const user = await User.findById(userId, 'name email _id').populate({path: "following followers", select:"name"});
 
         return res.status(200).json({
             success: true,
@@ -187,6 +187,8 @@ export const followOrUnfollowUser = async (req, res) => {
 
         await user.save();
         await userToFollowInteraction.save();
+
+        await user.populate({path: "following followers", select:"name"})
 
         return res.status(200).json({
             success: true,

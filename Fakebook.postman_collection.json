@@ -250,6 +250,21 @@
 					"response": []
 				},
 				{
+					"name": "GetTimeline",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVkN2QyZjZmYTkzMDVmMWM0MjQ0MGYiLCJyb2xlTmFtZSI6InVzZXIiLCJpYXQiOjE3MTA5NDg4NDd9.Ji-QGefA6iyEsQaYi5gtWn7I1IaxPXAp3SzLytM0Ki0"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{server}}/api/posts/timeline"
+					},
+					"response": []
+				},
+				{
 					"name": "MakingPost",
 					"request": {
 						"auth": {
@@ -408,7 +423,7 @@
 		},
 		{
 			"key": "local",
-			"value": "http://localhost:4000/",
+			"value": "http://localhost:4000",
 			"type": "string"
 		}
 	]
