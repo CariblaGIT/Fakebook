@@ -6,14 +6,13 @@
 <h4 align="center">API for social media application</h4>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#project-objective">Project objective</a> •
-  <a href="#stack">Stack</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#api">API</a> •
-  <a href="#future-improvements">Future improvements</a> •
-  <a href="#support">Support</a> •
-  <a href="#you-may-also-like">You may also like...</a>
+  <a href="#-key-features">Key Features</a> •
+  <a href="#-project-objective">Project objective</a> •
+  <a href="#️-stack">Stack</a> •
+  <a href="#-installation">Installation</a> •
+  <a href="#-api">API</a> •
+  <a href="#️-future-improvements">Future improvements</a> •
+  <a href="#-you-may-also-like">You may also like...</a>
 </p>
 
 ## 🔑 Key Features
@@ -92,7 +91,11 @@ Follow the steps to emulate the project in your local device. But is not necessa
 
 ## 🔗 API
 
-The API is a non relational API in which there are Users and Posts, that are referenced with the _id property from the users in the likes, comments and following interactions that have between them
+The API is a non relational API in which there are Users and Posts, that are referenced with the _id property from the users in the likes, comments and following interactions that have between them as is shown on the next diagram:
+
+<div align="center">
+<img src="./src/core/img/Fakebook_Diagram.png">
+</div>
 
 ### Endpoints and what does each one
 
