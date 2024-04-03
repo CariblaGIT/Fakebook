@@ -15,6 +15,10 @@ const UserSchema = new Schema(
             type: String,
             required: true
         },
+        avatar: {
+            type: String,
+            default: "default_avatar.png"
+        },
         role: {
             type: String,
             enum: ["user", "admin", "super_admin"],

@@ -78,6 +78,7 @@ export const postsFromUser = async (req, res) => {
 export const modifyProfile = async (req, res) => {
     try {
         let {name, email, password} = req.body;
+        const avatar = req.file?.filename;
         const userId = req.tokenData.userId;
 
         if(!name && !email && !password){
@@ -100,14 +101,28 @@ export const modifyProfile = async (req, res) => {
 
         const userToUpdate = User.findById(userId);
 
-        const userUpdated = await User.findByIdAndUpdate(
-            userId,
-            {
-                name: name ? name : userToUpdate.name,
-                email: email ? email : userToUpdate.email,
-                password: password ? password : userToUpdate.password
-            }
-        )
+        let userUpdated;
+
+        if(!avatar){
+            userUpdated = await User.findByIdAndUpdate(
+                userId,
+                {
+                    name: name ? name : userToUpdate.name,
+                    email: email ? email : userToUpdate.email,
+                    password: password ? password : userToUpdate.password
+                }
+            )
+        } else {
+            userUpdated = await User.findByIdAndUpdate(
+                userId,
+                {
+                    name: name ? name : userToUpdate.name,
+                    email: email ? email : userToUpdate.email,
+                    avatar: avatar,
+                    password: password ? password : userToUpdate.password
+                }
+            )
+        }
 
         return res.status(200).json({
             success: true,

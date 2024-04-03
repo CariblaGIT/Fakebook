@@ -11,7 +11,7 @@ export const seederDefaultPosts = async () => {
         const likes = [user2Id, user1Id];
 		await Post.create([
 			{
-                content: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg/800px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg",
+                content: ["https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg/800px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg"],
                 text: "Passing a beautifull day in Paris :D",
                 owner: user1Id,
                 likes: likes,
@@ -22,7 +22,7 @@ export const seederDefaultPosts = async () => {
                 _id: new mongoose.Types.ObjectId("65ed83d651c924dbeba1bf9b")
             },
             {
-                content: "https://andreuworld.com/media/catalog/product/import/galeria/proyectos/andreu_world_suitopia_hotel_6.webp",
+                content: ["https://andreuworld.com/media/catalog/product/import/galeria/proyectos/andreu_world_suitopia_hotel_6.webp"],
                 text: "Enjoying the views with some alcohol and friends X.X",
                 owner: user2Id,
                 likes: likes,

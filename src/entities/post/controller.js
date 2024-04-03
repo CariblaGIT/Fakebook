@@ -4,18 +4,35 @@ import { handleError } from "./handleErrors.js";
 
 export const makingPost = async (req, res) => {
     try {
-        const {content, text} = req.body;
+        const { text } = req.body;
         const owner = req.tokenData.userId;
+        const contents = req.files;
+        const arrayContents = [];
+        let postCreated;
+
+        if(contents){
+            for(let i = 0; i < contents.length; i++){
+                console.log(contents[i].filename, " => Nombre file");
+                arrayContents.push(contents[i].filename)
+            }
+        }
 
         if(!text){
             throw new Error ("Needed to have a text to create a post");
         }
 
-        const postCreated = await Post.create({
-            content,
-            text,
-            owner
-        })
+        if(!contents){
+            postCreated = await Post.create({
+                text,
+                owner
+            })
+        } else {
+            postCreated = await Post.create({
+                content : arrayContents,
+                text,
+                owner
+            })
+        }
 
         return res.status(201).json({
             success: true,
@@ -83,14 +100,14 @@ export const postById = async (req, res) => {
 
 export const updatePost = async (req, res) => {
     try {
-        const {postId, content, text} = req.body;
+        const {postId, text} = req.body;
         const userId = req.tokenData.userId;
 
         if(!postId){
             throw new Error ("No introduced post reference");
         }
 
-        if(!content && !text){
+        if(!text){
             throw new Error ("No introduced data to update the post");
         }
 
@@ -103,7 +120,6 @@ export const updatePost = async (req, res) => {
         const updatedPost = await Post.findByIdAndUpdate(
             postId,
             {
-                content: content ? content : postToUpdate.content,
                 text: text ? text : postToUpdate.text,
             }
         ).populate({path: "likes owner", select:"name"}).populate({path: "comments", populate:{path: "user", select:"name"}});
