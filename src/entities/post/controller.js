@@ -268,7 +268,7 @@ export const getTimeline = async (req, res) => {
         const user = await User.findById(userId);
         const followingUsers = user.following;
 
-        const postTimeline = await Post.find({owner: {$in: followingUsers}}).sort({createdAt: 'descending'}).populate({path: "likes owner", select:"name"},).populate({path: "comments", populate:{path: "user", select:"name"}});
+        const postTimeline = await Post.find({owner: {$in: followingUsers}}).sort({createdAt: 'descending'}).populate({path: "likes owner", select:"name avatar"},).populate({path: "comments", populate:{path: "user", select:"name"}});
 
         return res.status(200).json({
             success: true,
