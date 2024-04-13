@@ -99,12 +99,8 @@ export const modifyProfile = async (req, res) => {
             }
         }
 
-        const userToUpdate = User.findById(userId);
-
-        let userUpdated;
-
         if(!avatar){
-            userUpdated = await User.findByIdAndUpdate(
+            const userUpdated = await User.findByIdAndUpdate(
                 userId,
                 {
                     name: name ? name : userToUpdate.name,
@@ -112,8 +108,14 @@ export const modifyProfile = async (req, res) => {
                     password: password ? password : userToUpdate.password
                 }
             )
+
+            return res.status(200).json({
+                success: true,
+                message: "User profile updated succesfully",
+                data: userUpdated
+            })
         } else {
-            userUpdated = await User.findByIdAndUpdate(
+            const userUpdated = await User.findByIdAndUpdate(
                 userId,
                 {
                     name: name ? name : userToUpdate.name,
@@ -122,13 +124,13 @@ export const modifyProfile = async (req, res) => {
                     password: password ? password : userToUpdate.password
                 }
             )
+            
+            return res.status(200).json({
+                success: true,
+                message: "User profile updated succesfully",
+                data: userUpdated
+            })
         }
-
-        return res.status(200).json({
-            success: true,
-            message: "User profile updated succesfully",
-            data: userUpdated
-        })
     } catch (error) {
         handleError(res, error.message)
     }
