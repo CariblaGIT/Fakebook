@@ -85,9 +85,13 @@ export const modifyProfile = async (req, res) => {
             throw new Error("Need to bring data to update a user")
         }
 
+        const userToUpdate = await User.findById(userId)
+
         if(email){
             if (!verifyEmail(email)) {
                 throw new Error("Email format invalid")
+            } else {
+                userToUpdate.email = email;
             }
         }
 
@@ -96,43 +100,25 @@ export const modifyProfile = async (req, res) => {
                 throw new Error("Format password invalid")
             } else {
                 password = bcrypt.hashSync(password, 5);
+                userToUpdate.password = password;
             }
         }
 
-        const userToUpdate = await User.findById(userId)
-
-        if(!avatar){
-            const userUpdated = await User.findByIdAndUpdate(
-                userId,
-                {
-                    name: name ? name : userToUpdate.name,
-                    email: email ? email : userToUpdate.email,
-                    password: password ? password : userToUpdate.password
-                }
-            )
-
-            return res.status(200).json({
-                success: true,
-                message: "User profile updated succesfully",
-                data: userUpdated
-            })
-        } else {
-            const userUpdated = await User.findByIdAndUpdate(
-                userId,
-                {
-                    name: name ? name : userToUpdate.name,
-                    email: email ? email : userToUpdate.email,
-                    avatar: avatar,
-                    password: password ? password : userToUpdate.password
-                }
-            )
-
-            return res.status(200).json({
-                success: true,
-                message: "User profile updated succesfully",
-                data: userUpdated
-            })
+        if(name){
+            userToUpdate.name = name;
         }
+
+        if(avatar){
+            userToUpdate.avatar = avatar;
+        }
+
+        userToUpdate.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "User profile updated succesfully",
+            data: userToUpdate
+        })
     } catch (error) {
         handleError(res, error.message)
     }
