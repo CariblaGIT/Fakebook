@@ -99,6 +99,8 @@ export const modifyProfile = async (req, res) => {
             }
         }
 
+        const userToUpdate = await User.findById(userId)
+
         if(!avatar){
             const userUpdated = await User.findByIdAndUpdate(
                 userId,
@@ -124,7 +126,7 @@ export const modifyProfile = async (req, res) => {
                     password: password ? password : userToUpdate.password
                 }
             )
-            
+
             return res.status(200).json({
                 success: true,
                 message: "User profile updated succesfully",
