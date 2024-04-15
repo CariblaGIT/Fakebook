@@ -10,7 +10,7 @@ export const getUsers = async (req, res) => {
         const email = req.query.email;
 
         if(email){
-            const user = await User.findOne({email: email}, '-password').populate({path: "following followers", select:"name"});
+            const user = await User.findOne({email: email}).populate({path: "following followers", select:"name"});
 
             if(user == null){
                 throw new Error("You cant find a user with that email")
@@ -22,6 +22,25 @@ export const getUsers = async (req, res) => {
                 data: user
             })
         }
+
+        const users = await User.find({}).populate({path: "following followers", select:"name"});
+
+        if(!users){
+            throw new Error("You cant find users")
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Users retrieved succesfully",
+            data: users
+        })
+    } catch (error) {
+        handleError(res, error.message)
+    }
+}
+
+export const getUsersAsUser = async (req, res) => {
+    try {
 
         const users = await User.find({}, '-password').populate({path: "following followers", select:"name"});
 
