@@ -165,7 +165,7 @@ export const giveOrRemoveLikePost = async (req, res) => {
         const postInteracted = await Post.findById(postId).populate({path: "likes owner", select:"name"}).populate({path: "comments", populate:{path: "user", select:"name"}});
 
         (postInteracted.likes).forEach(user => {
-            if(user.toString() === userId){
+            if((user._id).toString() === userId){
                 isLiked = true;
             }
         });
