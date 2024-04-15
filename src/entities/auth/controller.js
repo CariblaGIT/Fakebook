@@ -70,7 +70,8 @@ export const loginUser = async (req, res) => {
                 userId: user.id,
                 name: user.name,
                 avatar: user.avatar,
-                roleName: user.role
+                roleName: user.role,
+                following: user.following
             },
             process.env.JWT_SECRET
         );
