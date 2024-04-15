@@ -42,7 +42,7 @@ export const getUsers = async (req, res) => {
 export const getUsersAsUser = async (req, res) => {
     try {
 
-        const users = await User.find({}, '-password').populate({path: "following followers", select:"name"});
+        const users = await User.find({role: "user"}, '-password').populate({path: "following followers", select:"name"});
 
         if(!users){
             throw new Error("You cant find users")
