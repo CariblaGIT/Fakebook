@@ -66,7 +66,7 @@ export const myPosts = async (req, res) => {
     try {
         const userId = req.tokenData.userId;
 
-        const posts = await Post.find({owner: userId}).populate({path: "likes owner", select:"name"}).populate({path: "comments", populate:{path: "user", select:"name"}});
+        const posts = await Post.find({owner: userId}).populate({path: "likes owner", select:"name avatar"}).populate({path: "comments", populate:{path: "user", select:"name"}});
 
         if(posts.length === 0){
             throw new Error ("No posts from that user have been found");
