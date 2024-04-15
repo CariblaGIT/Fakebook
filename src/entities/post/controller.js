@@ -178,7 +178,7 @@ export const giveOrRemoveLikePost = async (req, res) => {
             await postInteracted.save();
         }
 
-        await postInteracted.populate({path: "likes owner", select:"name"}).populate({path: "comments", populate:{path: "user", select:"name"}});
+        //await postInteracted.populate({path: "likes owner", select:"name"}).populate({path: "comments", populate:{path: "user", select:"name"}});
 
         return res.status(200).json({
             success: true,
