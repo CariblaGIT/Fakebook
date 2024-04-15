@@ -18,7 +18,7 @@ const multerUpload = multer({ storage: avatarsStorage });
 const router = Router();
 
 router.get('/', auth, verifySuperAdmin, getUsers);
-router.get('/users', auth, getUsersAsUser);
+router.get('/list', auth, getUsersAsUser);
 router.get('/profile', auth, getProfile);
 router.get('/posts/:userId', auth, postsFromUser);
 router.put('/:id/role', auth, verifySuperAdmin, changeUserRole);
